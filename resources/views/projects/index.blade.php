@@ -6,9 +6,10 @@
 <table>
     <thead>
         <tr>
-            <th>Nome</th>
+            <th>Nome Progetto</th>
             <th>Cliente</th>
-            <th>Descrizione</th>
+            <th>Data di inizio</th>
+            <th>Data di fine</th>
             <th></th>
         </tr>
     </thead>
@@ -17,7 +18,8 @@
         <tr>
             <td>{{$project->name}}</td>
             <td>{{$project->client}}</td>
-            <td>{{$project->description}}</td>
+            <td>{{$project->start_date}}</td>
+            <td>{{$project->end_date}}</td>
             <td><a href="{{ route("projects.show", $project)}}">Visualizza</a></td>
         </tr>
         @endforeach

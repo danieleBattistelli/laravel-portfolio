@@ -4,8 +4,8 @@
 @section("content")
 <h1>{{$project->title}}</h1>
 
-{{-- <div class="d-flex py-4 gap-2">
-    <a class="btn btn-outline-warning" href="{{ route("projects.edit", $post) }}">Modifica</a>
+<div class="d-flex py-4 gap-2">
+    <a class="btn btn-outline-warning" href="{{ route("projects.edit", $project) }}">Modifica</a>
 
     <!-- Bottone per aprire la modale -->
     <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Elimina</button>
@@ -24,7 +24,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                <form action="{{ route("projects.destroy", $post) }}" method="post" class="d-inline">
+                <form action="{{ route("projects.destroy", $project) }}" method="post" class="d-inline">
                     @csrf
                     @method("DELETE")
                     <input type="submit" class="btn btn-danger" value="Conferma"></input>
@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>
 
 <table>
     <tr>

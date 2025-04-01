@@ -3,9 +3,10 @@
 @section("title","Tutti i post:")
 
 @section("content")
-<div class="py-4">
-    <a href="{{ route('posts.create') }}" class="btn btn-outline-primary">Aggiungi Post</a>
-</div>
+
+<a href="{{ route('posts.create') }}" class="btn btn-outline-primary my-4">
+    Aggiungi Post</a>
+
 <table>
 
     <thead>
@@ -23,7 +24,9 @@
             <td>{{$post->author}}</td>
             <td>{{$post->category}}</td>
             <td>
-                <a href="{{ route("posts.show", $post)}}" class="btn btn-outline-success">Visualizza</a>
+                <a href="{{ route("posts.show", $post)}}" class="btn btn-outline-success">
+                    Visualizza
+                </a>
             </td>
         </tr>
         @endforeach

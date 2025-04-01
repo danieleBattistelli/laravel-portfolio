@@ -19,7 +19,7 @@
             <td>{{$project->name}}</td>
             <td>{{$project->client}}</td>
             <td>{{$project->start_date}}</td>
-            <td>{{$project->end_date}}</td>
+            <td>{{$project->end_date}}</td> 
             <td><a href="{{ route("projects.show", $project)}}">Visualizza</a></td>
         </tr>
         @endforeach

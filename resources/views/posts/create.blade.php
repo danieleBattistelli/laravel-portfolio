@@ -16,7 +16,11 @@
     </div>
     <div class="mb-3">
         <label for="category" class="form-label">Categoria</label>
-        <input type="text" class="form-control" name="category" id="category" required>
+        <select name="category_id" id="category_id">
+            @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
+        </select>
     </div>
     <div class="mb-3">
         <label for="content" class="form-label">Contenuto</label>

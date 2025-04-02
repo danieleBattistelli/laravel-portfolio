@@ -22,7 +22,7 @@
         <tr>
             <td>{{$post->title}}</td>
             <td>{{$post->author}}</td>
-            <td>{{$post->category}}</td>
+            <td>{{$post->category->name}}</td>
             <td>
                 <a href="{{ route("posts.show", $post)}}" class="btn btn-outline-success">
                     Visualizza

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
+
 
 class PostController extends Controller
 {
@@ -25,7 +27,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::all();
+        //dd($categories);
+        return view('posts.create', compact("categories"));
     }
 
     /**
@@ -34,11 +38,19 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        //dd($data);
+
+        // Validazione dei dati
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'category_id' => 'required|integer|exists:categories,id',
+            'content' => 'required|string',
+        ]);
+
         $newPost = new Post();
         $newPost->title = $data['title'];
         $newPost->author = $data['author'];
-        $newPost->category = $data['category'];
+        $newPost->category_id = $data['category_id']; // Deve essere un ID numerico valido
         $newPost->content = $data['content'];
 
         $newPost->save();
@@ -51,6 +63,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        //dd($post->category);
         //$post = Post::find($post->id);
         // se si passa come argomento della funzione un'istanza di un modello,=> Post $post
         // invece di string id, Laravel cerca automaticamente il record corrispondente
@@ -63,8 +76,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        $categories = Category::all();
 
-        return view('posts.edit', compact('post'));
+        return view('posts.edit', compact('post','categories'));
     }
 
     /**
@@ -76,7 +90,7 @@ class PostController extends Controller
         //Modifichiamo le informazioni contenute nel post:
             $post->title = $data['title'];
             $post->author= $data['author'];
-            $post->category= $data['category'];
+            $post->category_id= $data['category_id'];
             $post->content= $data['content'];
 
             $post->update();

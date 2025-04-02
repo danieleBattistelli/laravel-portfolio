@@ -16,10 +16,19 @@
         <label for="name" class="form-label">Nome Progetto</label>
         <input type="text" class="form-control" name="name" id="name" required value="{{ $project->name }}">
     </div>
+    <div>
+        <label for="type" class="form-label">Tipo</label>
+        <select name="type_id" id="type_id">
+            @foreach ($types  as $type)
+                    <option value="{{ $type->id }}">{{ $type->name }}</option>
+            @endforeach
+        </select>
+    </div>
     <div class="mb-3">
         <label for="client" class="form-label">Cliente</label>
         <input type="text" class="form-control" name="client" id="client" required value="{{ $project->client }}">
     </div>
+
     <div class="mb-3">
         <label for="start_date" class="form-label">Data Inizio</label>
         <input type="date" class="form-control" name="start_date" id="start_date" required value="{{ $project->start_date }}">

@@ -49,7 +49,7 @@
     </tr>
     <tr>
         <th>Categoria</th>
-        <td>{{$post->category}}</td>
+        <td>{{$post->category->name}}</td>
     </tr>
 </table>
 <a href="{{route('posts.index')}}" class="btn btn-outline-success my-4">Torna alla lista dei post</a>

@@ -11,6 +11,7 @@
     <thead>
         <tr>
             <th>Nome Progetto</th>
+            <th>Tipo</th>
             <th>Cliente</th>
             <th>Data di inizio</th>
             <th>Data di fine</th>
@@ -21,6 +22,7 @@
         @foreach($projects as $project)
         <tr>
             <td>{{$project->name}}</td>
+            <td>{{$project->type->name}}</td>
             <td>{{$project->client}}</td>
             <td>{{$project->start_date}}</td>
             <td>{{$project->end_date}}</td>

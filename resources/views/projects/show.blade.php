@@ -44,6 +44,10 @@
         <td>{{$project->name}}</td>
     </tr>
     <tr>
+        <th>Tipo progetto</th>
+        <td>{{$project->type->name}}</td>
+    </tr>
+    <tr>
         <th>Cliente</th>
         <td>{{$project->client}}</td>
     </tr>

@@ -1,5 +1,4 @@
 @extends('layouts.posts')
-
 @section("title","Crea un nuovo progetto")
 @section("content")
 <form action="{{ route('projects.store') }}" method="POST">
@@ -7,27 +6,34 @@
     {{-- Il route projects.store è il percorso per la creazione di un nuovo progetto --}}
     {{-- Il token CSRF è necessario per proteggere il tuo form da attacchi CSRF --}}
     @csrf
-    <div>
-        <label for="name">Nome Progetto</label>
-        <input type="text" name="title" id="title" required>
+    <div class="mb-3">
+        <label for="name" class="form-label">Nome Progetto</label>
+        <input type="text" class="form-control" name="title" id="title" required>
     </div>
-    <div>
-        <label for="client">Cliente</label>
-        <input type="text" name="client" id="client" required>
+    <div class="mb-3">
+        <label for="type" class="form-label">Tipo</label>
+        <select class="form-select" name="type_id" id="type_id">
+            @foreach ($types as $type)
+            <option value="{{ $type->id }}">{{ $type->name }}</option>
+            @endforeach
+        </select>
     </div>
-    <div>
-        <label for="start_date">Data di inizio</label>
-        <input type="date" name="start_date" id="start_date" required>
+    <div class="mb-3">
+        <label for="client" class="form-label">Cliente</label>
+        <input type="text" class="form-control" name="client" id="client" required>
     </div>
-    <div>
-        <label for="end_date">Data di fine</label>
-        <input type="date" name="end_date" id="end_date" required></input>
+    <div class="mb-3">
+        <label for="start_date" class="form-label">Data di inizio</label>
+        <input type="date" class="form-control" name="start_date" id="start_date" required>
     </div>
-    <div>
-        <label for="description">Descrizione</label></label>
-        <textarea name="description" id="description" required></textarea>
+    <div class="mb-3">
+        <label for="end_date" class="form-label">Data di fine</label>
+        <input type="date" class="form-control" name="end_date" id="end_date" required>
     </div>
-    <button type="submit">Crea Progetto</button>
+    <div class="mb-3">
+        <label for="description" class="form-label">Descrizione</label>
+        <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-outline-primary">Crea Progetto</button>
 </form>
 @endsection
-

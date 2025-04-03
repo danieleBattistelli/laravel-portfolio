@@ -27,6 +27,17 @@
             @endforeach
         </select>
     </div>
+    {{--Tags --}}
+    <div class="form-control mb-3 d-flex flex-wrap">
+        @foreach ($tags as $tag)
+            <div class="tag me-2">
+                <input type="checkbox" name="tags[]" value="{{ $tag->id }}" id="tag-{{ $tag->id }}"
+                {{$post->tags->contains($tag->id) ? 'checked' : ''}}>
+                <label for="tag-{{ $tag->id }}">{{ $tag->name }}</label>
+            </div>
+        @endforeach
+    </div>
+
     <div class="mb-3">
         <label for="content" class="form-label">Contenuto</label>
         <textarea class="form-control" name="content" id="content" rows="5" required>{{ $post->content }}</textarea>

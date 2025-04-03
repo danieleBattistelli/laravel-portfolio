@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
+use App\Models\Tag;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -27,9 +28,15 @@ class PostController extends Controller
      */
     public function create()
     {
+        //prendo le categorie
         $categories = Category::all();
+
+        //prendo i tag
+        $tags = Tag::all();
+
         //dd($categories);
-        return view('posts.create', compact("categories"));
+
+        return view('posts.create', compact("categories", "tags"));
     }
 
     /**
@@ -38,6 +45,8 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+
+        //dd($data);
 
         // Validazione dei dati
         $request->validate([
@@ -55,6 +64,15 @@ class PostController extends Controller
 
         $newPost->save();
 
+        //Dopo aver salvato il post
+
+        //controllo se ricevo dei tags
+        if ($request->has('tags')) {
+            //li salvo nella tabella ponte
+            $newPost->tags()->attach($data['tags']);
+        }
+
+
         return redirect()->route('posts.show', $newPost);
     }
 
@@ -63,11 +81,14 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        //dd($post->tags);
         //dd($post->category);
         //$post = Post::find($post->id);
         // se si passa come argomento della funzione un'istanza di un modello,=> Post $post
         // invece di string id, Laravel cerca automaticamente il record corrispondente
         // nella tabella del database corrispondente al modello e lo passa alla funzione.
+
+        //dd($post->tags);
         return view('posts.show', compact('post'));
     }
 
@@ -76,9 +97,13 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        //prendo le categorie
         $categories = Category::all();
 
-        return view('posts.edit', compact('post','categories'));
+        //prendo i tag
+        $tags = Tag::all();
+
+        return view('posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -87,16 +112,26 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $data = $request->all();
+        //dd($data);
         //Modifichiamo le informazioni contenute nel post:
-            $post->title = $data['title'];
-            $post->author= $data['author'];
-            $post->category_id= $data['category_id'];
-            $post->content= $data['content'];
+        $post->title = $data['title'];
+        $post->author = $data['author'];
+        $post->category_id = $data['category_id'];
+        $post->content = $data['content'];
 
-            $post->update();
+        $post->update();
 
-            return redirect()->route("posts.show", $post);
+        //verifichiamo se stiamo ricevendo i tags
+        if ($request->has('tags')) {
 
+            //Sincronizziamo i tags della tabella Pivot
+            $post->tags()->sync($data['tags']);
+        } else {
+            //se non riceviamo i tags li eliminiamo tutti quelli collegati al post dalla tabella pivot
+            $post->tags()->detach();
+        }
+
+        return redirect()->route("posts.show", $post);
     }
 
     /**
@@ -104,6 +139,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        // Rimuovi i collegamenti nella tabella pivot (tags)
+        $post->tags()->detach();
+
         $post->delete();
 
         return redirect()->route("posts.index");

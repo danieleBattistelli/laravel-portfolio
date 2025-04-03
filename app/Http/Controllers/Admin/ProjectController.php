@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 
@@ -24,8 +25,16 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        //prendo i Tipi
         $types = Type::all();
-        return view('projects.create', compact("types"));
+
+        //prendo le tecnologie
+        $technologies = Technology::all();
+
+        return view(
+            'projects.create',
+            compact("types", "technologies")
+        );
     }
 
     /**
@@ -45,8 +54,13 @@ class ProjectController extends Controller
 
         $newProject->save();
 
-        return redirect()->route('projects.show', $newProject);
+        //Dopo aver salvato il progetto controllo se ricevo le tecnlogie
+        if ($request->has('technologies')) {
+            //li salvo nella tabella ponte
+            $newProject->technologies()->attach($data['technologies']);
+        }
 
+        return redirect()->route('projects.show', $newProject);
     }
 
     /**
@@ -62,8 +76,17 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        //prendo i tipi
         $types = Type::all();
-        return view('projects.edit', compact('project','types'));
+
+        //prendo le tecnologie
+        $technologies = Technology::all();
+
+
+        return view(
+            'projects.edit',
+            compact('project', 'types', 'technologies')
+        );
     }
 
     /**
@@ -73,17 +96,27 @@ class ProjectController extends Controller
     {
         $data = $request->all();
         //Modifichiamo le informazioni contenute nel progetto:
-            //dd($data);
-            $project->name = $data['name'];
-            $project->type_id = $data['type_id'];
-            $project->client = $data['client'];
-            $project->start_date = $data['start_date'];
-            $project->end_date = $data['end_date'];
-            $project->description = $data['description'];
+        //dd($data);
+        $project->name = $data['name'];
+        $project->type_id = $data['type_id'];
+        $project->client = $data['client'];
+        $project->start_date = $data['start_date'];
+        $project->end_date = $data['end_date'];
+        $project->description = $data['description'];
 
-            $project->update();
+        $project->update();
 
-            return redirect()->route("projects.show", $project);
+        //Dopo il salvataggio verifichiamo se stiamo ricevendo le tecnologie
+        if ($request->has('technologies')) {
+
+            //Sincronizziamo i dati nella tabella Pivot
+            $project->technologies()->sync($data['technologies']);
+        } else {
+            //se non riceviamo i tags li eliminiamo tutti quelli collegati al post dalla tabella pivot
+            $project->technologies()->detach();
+        }
+
+        return redirect()->route("projects.show", $project);
     }
 
     /**

@@ -6,8 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    //Colleghiamo la categoria
+    //One To Many con Category
     public function category(){
         return $this->belongsTo(Category::class);
+    }
+
+    //Many To Many con i Tags
+    public function tags(){
+        return $this->belongsToMany(Tag::class);
     }
 }

@@ -163,6 +163,11 @@ class PostController extends Controller
         // Rimuovi i collegamenti nella tabella pivot (tags)
         $post->tags()->detach();
 
+        if ($post->image) {
+            Storage::delete($post->image);
+        }
+
+
         $post->delete();
 
         return redirect()->route("posts.index");

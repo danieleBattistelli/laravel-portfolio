@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -51,6 +52,12 @@ class ProjectController extends Controller
         $newProject->start_date = $data['start_date'];
         $newProject->end_date = $data['end_date'];
         $newProject->description = $data['description'];
+
+        if (array_key_exists('image', $data)) {
+            $img_url = Storage::putFile('projects', $data['image']);
+            $newProject->image = $img_url;
+        }
+
 
         $newProject->save();
 

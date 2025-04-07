@@ -1,11 +1,12 @@
 @extends('layouts.posts')
 @section("title","Crea un nuovo progetto")
 @section("content")
-<form action="{{ route('projects.store') }}" method="POST">
+<form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data">
     {{-- Il metodo POST è usato per inviare dati al server --}}
     {{-- Il route projects.store è il percorso per la creazione di un nuovo progetto --}}
     {{-- Il token CSRF è necessario per proteggere il tuo form da attacchi CSRF --}}
     @csrf
+
     <div class="mb-3">
         <label for="name" class="form-label">Nome Progetto</label>
         <input type="text" class="form-control" name="title" id="title" required>
@@ -27,6 +28,12 @@
             </div>
         @endforeach
     </div>
+
+    <div class="mb-3">
+        <label for="image" class="form-label">Immagine</label>
+        <input type="file" class="form-control" name="image" id="image" accept="image/*">
+    </div>
+
 
     <div class="mb-3">
         <label for="client" class="form-label">Cliente</label>

@@ -2,7 +2,17 @@
 
 @section('title', 'Dettaglio del Progetto:')
 @section('content')
+
+    @if ($project->image)
+        <div class="d-flex justify-content-between align-items-center">
+            <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}" class="img-fluid"
+                style="max-width: 200px;">
+        </div>
+    @endif
+
     <h1>{{ $project->title }}</h1>
+
+
 
     <div class="d-flex py-4 gap-2">
         <a class="btn btn-outline-warning" href="{{ route('projects.edit', $project) }}">Modifica</a>

@@ -7,8 +7,7 @@ use App\Models\Tag;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
-
-
+use Illuminate\Support\Facades\Storage;
 class PostController extends Controller
 {
     /**
@@ -61,6 +60,17 @@ class PostController extends Controller
         $newPost->author = $data['author'];
         $newPost->category_id = $data['category_id']; // Deve essere un ID numerico valido
         $newPost->content = $data['content'];
+
+        // Se l'utente ha caricato un'immagine, salvala
+        if (array_key_exists('image', $data)) {
+            $img_url = Storage::putFile('posts', $data['image']);
+            $newPost->image = $img_url; // Salva il percorso dell'immagine nel database
+
+        } else {
+            $newPost->image = null; // Se non viene caricata un'immagine, imposta il campo a null
+        }
+        // Salva il post nel database
+        //dd($newPost);
 
         $newPost->save();
 

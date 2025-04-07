@@ -2,10 +2,9 @@
 @section('title', 'Crea un nuovo Post')
 @section('content')
 
-    <form action="{{ route('posts.store') }}" method="POST">
-        {{-- Il metodo POST è usato per inviare dati al server --}}
-        {{-- Il route posts.store è il percorso per la creazione di un nuovo post --}}
-        {{-- Il token CSRF è necessario per proteggere il tuo form da attacchi CSRF --}}
+    <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+        {{-- aggiungo enctype per caricare file --}}
+        {{-- aggiungo il token csrf per la protezione --}}
         @csrf
         <div class="mb-3">
             <label for="title" class="form-label">Titolo</label>
@@ -32,7 +31,14 @@
                 </div>
             @endforeach
         </div>
-        
+
+        {{--aggiungo input per caricare un immagine --}}
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Immagine</label>
+            <input type="file" class="form-control" name="image" id="image" accept="image/*">
+        </div>
+
         <div class="mb-3">
             <label for="content" class="form-label">Contenuto</label>
             <textarea class="form-control" name="content" id="content" rows="5" required></textarea>

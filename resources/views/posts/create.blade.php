@@ -6,6 +6,7 @@
         {{-- aggiungo enctype per caricare file --}}
         {{-- aggiungo il token csrf per la protezione --}}
         @csrf
+        
         <div class="mb-3">
             <label for="title" class="form-label">Titolo</label>
             <input type="text" class="form-control" name="title" id="title" required>
@@ -35,7 +36,9 @@
         {{--aggiungo input per caricare un immagine --}}
 
         <div class="mb-3">
-            <label for="image" class="form-label">Immagine</label>
+            <label for="image" class="form-label" >Immagine</label>
+            {{-- l'attributo accept limita i file che possono essere caricati --}}
+            {{-- l'attributo required rende il campo obbligatorio --}}
             <input type="file" class="form-control" name="image" id="image" accept="image/*">
         </div>
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
 class PostController extends Controller
 {
     /**
@@ -65,12 +66,7 @@ class PostController extends Controller
         if (array_key_exists('image', $data)) {
             $img_url = Storage::putFile('posts', $data['image']);
             $newPost->image = $img_url; // Salva il percorso dell'immagine nel database
-
-        } else {
-            $newPost->image = null; // Se non viene caricata un'immagine, imposta il campo a null
         }
-        // Salva il post nel database
-        //dd($newPost);
 
         $newPost->save();
 
@@ -129,6 +125,21 @@ class PostController extends Controller
         $post->category_id = $data['category_id'];
         $post->content = $data['content'];
 
+        // Se l'utente ha caricato un'immagine,
+        if (array_key_exists('image', $data)) {
+
+            // Se esiste già un'immagine, la eliminiamo
+            if (!is_null($post->image)) {
+                Storage::delete($post->image);
+            }
+
+            //carico la nuova immagine
+            $img_url = Storage::putFile('posts', $data['image']);
+
+            //aggiorno il db
+            $post->image = $img_url;
+        }
+
         $post->update();
 
         //verifichiamo se stiamo ricevendo i tags
@@ -141,7 +152,7 @@ class PostController extends Controller
             $post->tags()->detach();
         }
 
-        return redirect()->route("posts.show", $post);
+        return redirect()->route('posts.show', $post);
     }
 
     /**

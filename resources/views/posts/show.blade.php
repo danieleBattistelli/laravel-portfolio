@@ -2,13 +2,15 @@
 
 @section('title', 'Dettagli del Post:')
 @section('content')
+
+    {{--Sezione visualizzazione immagine --}}
     @if ($post->image)
         <div class="d-flex justify-content-between align-items-center">
-            <h2>Dettagli del Post:</h2>
             <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="img-fluid"
                 style="max-width: 200px;">
         </div>
     @endif
+
     <hr>
     <h1>{{ $post->title }}</h1>
 

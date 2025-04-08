@@ -110,6 +110,18 @@ class ProjectController extends Controller
         $project->start_date = $data['start_date'];
         $project->end_date = $data['end_date'];
         $project->description = $data['description'];
+        // Se l'utente ha caricato un'immagine,
+        if (array_key_exists('image', $data)) {
+            // Se esiste già un'immagine, la eliminiamo
+            if (!is_null($project->image)) {
+                Storage::delete($project->image);
+            }
+            //carico la nuova immagine
+            $img_url = Storage::putFile('projects', $data['image']);
+            //aggiorno il db
+            $project->image = $img_url;
+        }
+
 
         $project->update();
 
@@ -131,6 +143,14 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        //elimino l'immagine
+        if (!is_null($project->image)) {
+            Storage::delete($project->image);
+        }
+        //elimino le tecnologie
+        $project->technologies()->detach();
+        //elimino il progetto
+
         $project->delete();
 
         return redirect()->route("projects.index");

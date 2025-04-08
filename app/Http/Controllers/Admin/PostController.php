@@ -160,16 +160,14 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        // Rimuovi i collegamenti nella tabella pivot (tags)
+        // Rimuovi i collegamenti con (tags)
         $post->tags()->detach();
-
+        // Se esiste già un'immagine, la eliminiamo
         if ($post->image) {
             Storage::delete($post->image);
         }
-
-
+        // Elimina il post
         $post->delete();
-
         return redirect()->route("posts.index");
     }
 }

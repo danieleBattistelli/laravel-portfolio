@@ -28,7 +28,8 @@
             </div>
         @endforeach
     </div>
-
+    
+{{-- Immagine --}}
     <div class="mb-3">
         <label for="image" class="form-label">Immagine</label>
         <input type="file" class="form-control" name="image" id="image" accept="image/*">

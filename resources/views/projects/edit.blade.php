@@ -1,7 +1,8 @@
 @extends ("layouts.posts")
 @section('title', 'Modifica il Progetto:')
 @section('content')
-    <form action="{{ route('projects.update', $project) }}" method="POST">
+    <form action="{{ route('projects.update', $project) }}" method="POST" enctype="multipart/form-data">
+
         {{-- Il metodo POST è usato per inviare dati al server --}}
         {{-- Il route projects.store è il percorso per la creazione di un nuovo post --}}
         {{-- Il token CSRF è necessario per proteggere il tuo form da attacchi CSRF --}}
@@ -35,6 +36,20 @@
                 </div>
             @endforeach
         </div>
+
+        {{-- Immagine --}}
+        <div class="mb-3">
+            <label for="image" class="form-label">Immagine</label>
+            <input type="file" class="form-control" name="image" id="image" accept="image/*">
+        </div>
+        {{-- se esiste visualizzo l'immagine --}}
+        @if ($project->image)
+            <div class="d-flex justify-content-between align-items-center">
+                <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->name }}" class="img-fluid"
+                    style="max-width: 200px;">
+            </div>
+        @endif
+
 
         <div class="mb-3">
             <label for="client" class="form-label">Cliente</label>

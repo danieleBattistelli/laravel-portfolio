@@ -4,8 +4,10 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\TypeController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Type;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,13 +28,13 @@ Route::middleware(['auth', 'verified'])
     ->name('admin.')
     ->prefix('admin')
     ->group(function () {
-        Route::get('/',[DashboardController::class, 'index'])
-        ->name('dashboard');
+        Route::get('/', [DashboardController::class, 'index'])
+            ->name('dashboard');
     });
 
-    //Rotte per PostController
+//Rotte per PostController
 Route::resource('posts', PostController::class);
-    //->middleware('auth', 'verified');
+//->middleware('auth', 'verified');
 
 Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
 Route::put('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
@@ -41,16 +43,22 @@ Route::put('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edi
 Route::resource('projects', ProjectController::class)
     ->middleware('auth', 'verified');
 
-    Route::put('/projects/{id}', [ProjectController::class, 'update'])->name('projects.update');
-    Route::put('/projects/{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
+Route::put('/projects/{id}', [ProjectController::class, 'update'])->name('projects.update');
+Route::put('/projects/{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
 
 //Rotte per TypeController
 Route::resource('types', TypeController::class)
     ->middleware('auth', 'verified');
 
-    Route::put('/types/{id}', [TypeController::class, 'update'])->name('types.update');
-    Route::put('/types/{id}/edit', [TypeController::class, 'edit'])->name('types.edit');
+Route::put('/types/{id}', [TypeController::class, 'update'])->name('types.update');
+Route::put('/types/{id}/edit', [TypeController::class, 'edit'])->name('types.edit');
+
+//Rotte per ReviewController
+Route::resource('reviews', ReviewController::class)
+    ->middleware('auth', 'verified');
+
+Route::put('/reviews/{id}', [ReviewController::class, 'update'])->name('reviews.update');
+Route::put('/reviews/{id}/edit', [ReviewController::class, 'edit'])->name('reviews.edit');
 
 
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

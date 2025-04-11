@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         //prendo tutti i progetti dal database
-        $projects = Project::with('type')->get();
-        //dd($projects); // Rimuovi o commenta questa linea
+        $projects = Project::with('type', 'technologies')->get();
+        //dd($projects);
         return response()->json(
             [
                 'success' => 'true',

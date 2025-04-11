@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class AuthController extends Controller
 {
+    protected function guard()
+    {
+        return Auth::guard('api');
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -16,8 +21,9 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
+        $user = User::where('email', $credentials['email'])->first();
+
+        if ($user && Hash::check($credentials['password'], $user->password)) {
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return response()->json([
@@ -32,8 +38,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        // Elimina tutti i token dell'utente autenticato
-        $request->user()->tokens()->delete();
+        $this->guard()->user()->tokens()->delete();
 
         return response()->json(['message' => 'Logout effettuato con successo']);
     }
@@ -48,8 +53,12 @@ class AuthController extends Controller
 
         $data['password'] = Hash::make($data['password']);
 
+
         $user = User::create($data);
 
-        return response()->json(['message' => 'Registrazione completata con successo', 'user' => $user], 201);
+        // Reindirizza l'utente alla sezione di login
+        return response()->json([
+            'message' => 'Registrazione completata con successo. Ora puoi effettuare il login.'
+        ], 201);
     }
 }

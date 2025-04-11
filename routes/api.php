@@ -24,5 +24,5 @@ Route::middleware('auth:sanctum')->group(function () {
         }
         return response()->json($user);
     });
-    Route::post('/register', [AuthController::class, 'register']);
 });
+Route::post('/register', [AuthController::class, 'register']);

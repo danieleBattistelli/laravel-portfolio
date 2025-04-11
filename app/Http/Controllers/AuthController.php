@@ -53,12 +53,11 @@ class AuthController extends Controller
 
         $data['password'] = Hash::make($data['password']);
 
-
         $user = User::create($data);
 
-        // Reindirizza l'utente alla sezione di login
         return response()->json([
-            'message' => 'Registrazione completata con successo. Ora puoi effettuare il login.'
-        ], 201);
+            'message' => 'Registrazione completata con successo. Ora puoi effettuare il login.',
+            'user' => $user // Aggiunto per confermare la creazione dell'utente
+        ], 201); // Assicurati che lo stato HTTP sia 201
     }
 }

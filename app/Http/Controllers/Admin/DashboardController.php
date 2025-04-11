@@ -12,8 +12,8 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         return
-        //$user->name;
-        //$user->email;
+        $user->name;
+        $user->email;
         $user->password;
     }
 

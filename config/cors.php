@@ -30,5 +30,5 @@ return [
 
     // Indica se le richieste CORS possono includere credenziali (cookie, autenticazione HTTP, ecc.).
     // In questo caso, è impostato su `false`, quindi le credenziali non sono supportate.
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 ];

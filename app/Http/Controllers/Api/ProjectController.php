@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+    public function __construct()
+    {
+        // Cambia 'auth:api' con 'auth:sanctum' se stai usando Laravel Sanctum
+        $this->middleware('auth:sanctum');
+    }
     public function index()
     {
         //prendo tutti i progetti dal database

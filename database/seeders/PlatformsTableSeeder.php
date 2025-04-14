@@ -36,6 +36,8 @@ class PlatformsTableSeeder extends Seeder
             ['name' => 'Nintendo Wii U', 'color' => '#E60012'],
             ['name' => 'Nintendo Switch', 'color' => '#E60012'],
             ['name' => 'Nintendo Switch 2', 'color' => '#E60012'],
+            ['name' => 'PC', 'color' => '#000000'],
+            
         ];
 
         foreach ($platforms as $platform) {

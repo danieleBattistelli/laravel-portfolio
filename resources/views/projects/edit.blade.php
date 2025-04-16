@@ -15,7 +15,8 @@
 
         <div class="mb-3">
             <label for="name" class="form-label">Nome Progetto</label>
-            <input type="text" class="form-control" name="name" id="name" required value="{{ $project->name }}">
+            <input type="text" class="form-control" name="name" id="name"
+            required value="{{ $project->name }}">
         </div>
         <div>
             <label for="type" class="form-label">Tipo</label>
@@ -25,6 +26,7 @@
                 @endforeach
             </select>
         </div>
+        
         {{-- Tecnologie --}}
         <div class="form-control mb-3 d-flex flex-wrap">
             @foreach ($technologies as $technology)

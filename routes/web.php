@@ -33,8 +33,8 @@ Route::middleware(['auth', 'verified'])
     });
 
 //Rotte per PostController
-Route::resource('posts', PostController::class);
-//->middleware('auth', 'verified');
+Route::resource('posts', PostController::class)
+    ->middleware('auth', 'verified');
 
 Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
 Route::put('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');

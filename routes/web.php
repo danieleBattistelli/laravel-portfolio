@@ -32,28 +32,36 @@ Route::middleware(['auth', 'verified'])
             ->name('dashboard');
     });
 
-//Rotte per PostController
+
+// Rotte per PostController
+
 Route::resource('posts', PostController::class)
     ->middleware('auth', 'verified');
 
 Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
 Route::put('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
 
-//Rotte per ProjectController
+
+// Rotte per ProjectController
+
 Route::resource('projects', ProjectController::class)
     ->middleware('auth', 'verified');
 
 Route::put('/projects/{id}', [ProjectController::class, 'update'])->name('projects.update');
 Route::put('/projects/{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
 
-//Rotte per TypeController
+
+// Rotte per TypeController
+
 Route::resource('types', TypeController::class)
     ->middleware('auth', 'verified');
 
 Route::put('/types/{id}', [TypeController::class, 'update'])->name('types.update');
 Route::put('/types/{id}/edit', [TypeController::class, 'edit'])->name('types.edit');
 
-//Rotte per ReviewController
+
+// Rotte per ReviewController
+
 Route::resource('reviews', ReviewController::class)
     ->middleware('auth', 'verified');
 

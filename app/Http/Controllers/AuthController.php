@@ -57,54 +57,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Registrazione completata con successo. Ora puoi effettuare il login.',
-            'user' => $user // Aggiunto per confermare la creazione dell'utente
-        ], 201); // Assicurati che lo stato HTTP sia 201
-    }
-
-    public function registerControllers()
-    {
-        $controllers = [
-            'ReviewController',
-            'PostController',
-            'ProjectController',
-        ];
-
-        foreach ($controllers as $controller) {
-            if (!class_exists("App\\Http\\Controllers\\$controller")) {
-                return response()->json([
-                    'message' => "Il controller $controller non esiste."
-                ], 404);
-            }
-        }
-
-        return response()->json([
-            'message' => 'Tutti i controller sono stati registrati correttamente.',
-            'controllers' => $controllers
-        ]);
-    }
-
-    public function protectControllers()
-    {
-        $controllers = [
-            'ReviewController',
-            'PostController',
-            'ProjectController',
-        ];
-
-        foreach ($controllers as $controller) {
-            $controllerClass = "App\\Http\\Controllers\\$controller";
-            if (class_exists($controllerClass)) {
-                app($controllerClass)->middleware('auth:api');
-            } else {
-                return response()->json([
-                    'message' => "Il controller $controller non esiste."
-                ], 404);
-            }
-        }
-
-        return response()->json([
-            'message' => 'Tutti i controller sono stati protetti con il middleware auth:api.',
-            'controllers' => $controllers
-        ]);
+            'user' => $user
+        ], 201);
     }
 }

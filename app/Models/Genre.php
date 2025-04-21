@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Genre extends Model
 {
-    //One To Many con Review;
+    // Relazione One-to-Many con il modello Review
     public function reviews()
     {
         return $this->hasMany(Review::class);

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Platform extends Model
 {
-    //Many To Many con Review
+    // Relazione Many-to-Many con il modello Review
     public function reviews()
     {
         return $this->belongsToMany(Review::class);

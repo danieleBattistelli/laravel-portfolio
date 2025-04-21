@@ -11,9 +11,7 @@ class PostController extends Controller
 {
     public function index(Request $request)
     {
-        //prendo tutti i post dal database
         $posts = Post::with('category')->get();
-        //dd($posts);
         return response()->json(
             [
                 'success' => 'true',
@@ -24,10 +22,8 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        //prendo il post dal database
         $post->load('category', 'tags');
-        //dd($post);
-        return response() -> json(
+        return response()->json(
             [
                 'success' => 'true',
                 'data' => $post

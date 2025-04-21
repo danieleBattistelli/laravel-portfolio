@@ -2,30 +2,39 @@
 @section('title', 'Crea una nuova recensione')
 @section('content')
     <form action="{{ route('reviews.store') }}" method="POST" enctype="multipart/form-data">
+
         {{-- Il metodo POST è usato per inviare dati al server --}}
+
         {{-- Il route reviews.store è il percorso per la creazione di un nuovo progetto --}}
+
         {{-- Il token CSRF è necessario per proteggere il tuo form da attacchi CSRF --}}
+
         @csrf
 
         {{-- Nome Gioco --}}
+
         <div class="mb-3">
             <label for="gametitle" class="form-label">Nome Gioco</label>
             <input type="text" class="form-control" name="gametitle" id="gametitle" required>
         </div>
 
         {{-- Immagine --}}
+
         <div class="mb-3 w-25">
             <label for="image" class="form-label">Immagine</label>
             <input type="file" class="form-control" name="image" id="image" accept="image/*"
                 onchange="previewImage(event)">
         </div>
+
         {{-- Anteprima immagine caricata --}}
+
         <div class="mb-3">
             <img id="imagePreview" src="" alt="Anteprima immagine" class="img-fluid"
                 style="max-width: 200px; display: none;">
         </div>
 
         {{-- Genere --}}
+
         <div class="mb-3 w-25">
             <label for="genre_id" class="form-label">Genere</label>
             <select class="form-select" name="genre_id" id="genre_id">
@@ -36,6 +45,7 @@
         </div>
 
         {{-- Piattaforme --}}
+
         <div class="form-control mb-3 d-flex flex-wrap ">
             @foreach ($platforms as $platform)
                 <div class="tag me-2">
@@ -46,18 +56,21 @@
         </div>
 
         {{-- Titolo recensione --}}
+
         <div class="mb-3">
             <label for="reviewTitle" class="form-label">Titolo della recensione</label>
             <input type="text" class="form-control" name="reviewTitle" id="reviewTitle" required>
         </div>
 
         {{-- Recensione --}}
+
         <div class="mb-3">
             <label for="reviewBody" class="form-label">Recensione</label>
             <textarea class="form-control" name="reviewBody" id="reviewBody" rows="5" required></textarea>
         </div>
 
         {{-- Voto --}}
+
         <div class="mb-3 w-25">
             <label for="rating" class="form-label">Voto</label>
             <input type="text" class="form-control" name="rating" id="rating" required pattern="^\d+([.,]\d{1,2})?$"
@@ -65,12 +78,14 @@
         </div>
 
         {{-- Nome Recensore --}}
+
         <div class="mb-3 w-25">
             <label for="reviewerName" class="form-label">Nome Recensore</label>
             <input type="text" class="form-control" name="reviewerName" id="reviewerName" required>
         </div>
 
         {{-- Data di pubblicazione --}}
+
         <div class="mb-3 w-25">
             <label for="reviewDate" class="form-label">Data della recensione</label>
             <input type="date" class="form-control" name="reviewDate" id="reviewDate" required>
@@ -80,6 +95,7 @@
     </form>
 
     {{-- Script per anteprima immagine --}}
+
     <script>
         function previewImage(event) {
             const imagePreview = document.getElementById('imagePreview');

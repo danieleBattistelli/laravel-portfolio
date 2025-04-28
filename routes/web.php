@@ -6,8 +6,6 @@ use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\TypeController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Type;
-
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

@@ -5,11 +5,13 @@
 @section('content')
 
     <!--visualizzazione immagine -->
-    @if ($review->image)
+    @if ($review->image && file_exists(public_path('storage/' . $review->image)))
         <div class="d-flex justify-content-between align-items-center">
             <img src="{{ asset('storage/' . $review->image) }}" alt="{{ $review->gametitle }}" class="img-fluid"
                 style="max-width: 200px;">
         </div>
+    @else
+        <p>Immagine non disponibile</p>
     @endif
 
     <h1>{{ $review->gametitle }}</h1>
